@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilişim Teknolojileri Ödevi - Hilal Elçin Şahin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parliament-blue: #0A1128;
+            --navy-blue: #000E2F;
+            --baby-blue: #89CFF0;
+            --accent-blue: #0077FF;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, var(--parliament-blue), var(--navy-blue));
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            cursor: none;
+        }
+
+        /* Star Background System */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            opacity: 0;
+            filter: drop-shadow(0 0 5px currentColor);
+            animation: float-and-glow var(--duration) infinite ease-in-out alternate;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .star svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes float-and-glow {
+            0% { opacity: 0.2; transform: translateY(0) scale(0.8); }
+            100% { opacity: 0.7; transform: translateY(-20px) scale(1.1); }
+        }
+
+        /* Profile Section */
+        #profile-section {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            padding: 5px;
+            background: linear-gradient(135deg, var(--baby-blue), var(--accent-blue));
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(137, 207, 240, 0.3);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-wrapper:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 50px rgba(137, 207, 240, 0.5);
+        }
+
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px solid var(--navy-blue);
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-name {
+            margin-top: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Hero / Slogan */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+            text-align: center;
+        }
+
+        .slogan-badge {
+            background: rgba(137, 207, 240, 0.15);
+            color: var(--baby-blue);
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 30px;
+            border: 1px solid rgba(137, 207, 240, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff, var(--baby-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .description {
+            font-size: 1.25rem;
+            max-width: 750px;
+            margin: 0 auto 50px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        /* Actions & Media */
+        .actions-and-media {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 80px;
+            flex-wrap: wrap;
+        }
+
+        .media-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .media-img {
+            height: 140px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+            transition: var(--transition);
+        }
+
+        .media-img:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 15px 30px rgba(137, 207, 240, 0.4));
+        }
+
+        .cat-img { height: 120px; }
+
+        .dataset-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px var(--accent-blue), inset 0 0 10px var(--baby-blue);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            mix-blend-mode: screen;
+        }
+
+        .custom-cursor.hovering {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(137, 207, 240, 0.15);
+            border-color: var(--baby-blue);
+        }
+
+        .custom-cursor::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--baby-blue);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn {
+            position: relative;
+            padding: 18px 40px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border: none;
+            font-size: 1.1rem;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--baby-blue);
+            color: var(--navy-blue);
+            box-shadow: 0 10px 30px rgba(137, 207, 240, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(137, 207, 240, 0.4);
+            background: #fff;
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            border: 1.5px solid var(--glass-border);
+            color: var(--white);
+            backdrop-filter: blur(15px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: var(--baby-blue);
+        }
+
+        /* Graphics Gallery */
+        .gallery-container {
+            margin-bottom: 100px;
+            padding: 40px;
+            background: var(--glass);
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+        }
+
+        .gallery-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .grid-item {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .grid-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--baby-blue);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .overlay-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: var(--white);
+            font-weight: 700;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .grid-item:hover .overlay-label {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Modal */
+        #modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 11, 40, 0.95);
+            backdrop-filter: blur(20px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 40px;
+            cursor: zoom-out;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            box-shadow: 0 0 100px rgba(0,0,0,0.8);
+            transform: scale(0.9);
+            animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes popIn {
+            to { transform: scale(1); }
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: linear-gradient(135deg, rgba(137, 207, 240, 0.05), rgba(0, 119, 255, 0.05));
+            padding: 60px;
+            border-radius: 40px;
+            text-align: left;
+            margin-bottom: 100px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            color: var(--baby-blue);
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .content-section p {
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            #profile-section { top: 20px; right: 20px; }
+            .profile-pic { width: 70px; height: 70px; }
+            .actions-and-media { flex-direction: column; gap: 30px; }
+            .btn-group { flex-direction: column; width: 100%; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stars-container"></div>
+
+    <div id="profile-section" style="display: flex;">
+        <div class="profile-wrapper">
+            <img src="WhatsApp Image 2026-04-01 at 15.07.09.jpeg" alt="Hilal Elçin Şahin" class="profile-pic">
+        </div>
+        <div class="profile-name" style="color: var(--white); font-weight: 800; filter: brightness(1.2);">Hilal Elçin Şahin</div>
+    </div>
+
+    <div class="container" style="padding-top: 100px;">
+        <div class="slogan-badge">BİLİŞİM TEKNOLOJİLERİ PORTFOLYOSU 2026</div>
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem);">Dijital Dönüşüm ve Veri Zekâsı</h1>
+        <p class="description" style="max-width: 900px; color: var(--white); font-weight: 400; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));">
+            Gelişmiş hesaplama, veri analitiği ve akıllı web projelerinin derlemesi.
+        </p>
+
+        <div class="actions-and-media" style="margin-top: 50px; margin-bottom: 20px; flex-direction: column; gap: 40px; align-items: center;">
+            <div class="btn-group" style="flex-wrap: wrap; width: 100%; align-items: center; justify-content: center; gap: 20px;">
+                <a href="Görev2_tek_dosya.html" class="btn btn-primary">
+                    <span>🚌</span> Bus-screen
+                </a>
+                <button onclick="openGalleryFullscreen()" class="btn btn-primary">
+                    <span>🖼️</span> Visualizations
+                </button>
+                <a href="data.csv" download="data.csv" class="btn btn-primary">
+                    <span>📊</span> Download Dataset
+                </a>
+            </div>
+
+            <div class="mascot-group" style="display: flex; gap: 40px; align-items: flex-end; justify-content: center;">
+                <img src="character.png" alt="Karakter" style="height: 180px; filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6)); transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                <img src="cat.png" alt="Kedi" style="height: 140px; filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6)); transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            </div>
+        </div>
+
+        <style>
+             #gallery-overlay {
+                 position: fixed; inset: 0; background: rgba(5, 11, 40, 0.98);
+                 z-index: 500; display: none; overflow-y: auto; padding: 60px;
+                 backdrop-filter: blur(15px);
+             }
+             .close-gallery {
+                 position: absolute; top: 30px; right: 50px; font-size: 2.5rem; color: #fff;
+                 cursor: pointer; background: transparent; border: none; font-weight: bold;
+                 transition: transform 0.2s;
+             }
+             .close-gallery:hover { transform: scale(1.2); }
+             .layer-asset {
+                 position: fixed; pointer-events: none;
+                 filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); z-index: -1;
+             }
+        </style>
+        <div id="gallery-overlay">
+            <button class="close-gallery" onclick="closeGalleryFullscreen()">×</button>
+            <div class="gallery-container" style="background: transparent; border: none; box-shadow: none;">
+                <h2 class="gallery-title" style="color: white; text-align: center;">İstatistiksel Görselleştirmeler</h2>
+                <div class="grid">
+                <div class="grid-item" onclick="openModal('grafik_1_histogram.png')">
+                    <img src="grafik_1_histogram.png" alt="Histogram">
+                    <div class="overlay-label">Histogram Analizi</div>
+                </div>
+                <div class="grid-item" onclick="openModal('grafik_2_boxplot.png')">
+                    <img src="grafik_2_boxplot.png" alt="Boxplot">
+                    <div class="overlay-label">Boxplot Dağılımı</div>
+                </div>
+                <div class="grid-item" onclick="openModal('grafik_3_scatter.png')">
+                    <img src="grafik_3_scatter.png" alt="Scatter">
+                    <div class="overlay-label">Değişken İlişkileri</div>
+                </div>
+                <div class="grid-item" onclick="openModal('grafik_4_korelasyon.png')">
+                    <img src="grafik_4_korelasyon.png" alt="Korelasyon">
+                    <div class="overlay-label">Korelasyon Isı Haritası</div>
+                </div>
+                <div class="grid-item" onclick="openModal('grafik_5_bar.png')">
+                    <img src="grafik_5_bar.png" alt="Bar">
+                    <div class="overlay-label">Kategori Dağılımı</div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" onclick="closeModal()">
+        <img id="modal-img" src="" alt="Büyük Görsel">
+    </div>
+
+    <script>
+        // Stars generation using procedural SVG shapes
+        const starsContainer = document.getElementById('stars-container');
+        
+        function createStars() {
+            const count = 60;
+            const shapes = [
+                '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+                '<svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2L15 9h7l-5.5 4L18 20l-6-4.5L6 20l1.5-7L2 9h7l3-7z" clip-rule="evenodd"/></svg>',
+                '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg>'
+            ];
+            const colors = ['#ffffff', '#89CFF0', '#0077FF', '#e0f7fa'];
+            
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                const size = Math.random() * 15 + 10;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = Math.random() * 4 + 3;
+                const delay = Math.random() * 5;
+                
+                star.innerHTML = shape;
+                star.style.color = color;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.setProperty('--duration', `${duration}s`);
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function openModal(src) {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modal-img');
+            modal.style.display = 'flex';
+            modalImg.src = src;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        createStars();
+
+        // Custom Cursor Logic
+        const cursor = document.createElement('div');
+        cursor.className = 'custom-cursor';
+        document.body.appendChild(cursor);
+
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .grid-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+        });
+
+        function openGalleryFullscreen() {
+            document.getElementById('gallery-overlay').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGalleryFullscreen() {
+            document.getElementById('gallery-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
